@@ -1,0 +1,2 @@
+# Manual-vs-Automatic-Transmission-Vehicles
+This study purports to establish what factors make automobiles more fuel efficient. Regression analysis suggest that automobiles with longer quarter mile time tend to be more fuel efficient. There is an inteaction effect between transmission type and weight on fuel efficiency. For cars lighter than 3.40 thousands lbs. manual transmission cars are more fuel efficient than automatic transmission cars, otherwise the opposite is the case.
