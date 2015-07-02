@@ -1,0 +1,70 @@
+---
+title: 'Appendix: Regression Models Course Project'
+author: "Tamer Koksal"
+output: pdf_document
+---
+
+## 1. Variable Descriptions:
+
+
+Variable Name   | Variable Description
+----------------|-----------------------
+mpg             | Miles per gallon (US) 
+cyl             | Number of cylinders
+disp            | Displacement / Engine size (in cubic inches)
+hp              | Horsepower
+drat            | Rear axle ratio
+wt              | Weight
+qsec            | Qurarter mile time
+vs              | Engine shape (V-engine (0) or Straight-engine(1))
+am              | Transmission type (automatic (0) or manual (1))
+gear            | Number of forward gears
+crab            | Number of carburetor barrels
+
+## 2. Exploratory Analysis
+
+```{r, message=FALSE}
+str(mtcars)
+
+library(dplyr)
+mcars <- mtcars
+mcars <- mutate(mcars, cyl = factor(cyl, ordered = TRUE),
+                vs = factor(vs, labels = c("V", "S")),
+                am = factor(am, labels = c("Auto", "Manual")))
+```
+
+## 3. Pairwise comparison (scatter plots) of variables
+
+```{r}
+pairs(mcars, panel = panel.smooth)
+```
+
+## 4. Regression of `mpg` on all of the variables
+
+```{r}
+fit <- lm(mpg ~ ., data=mcars)
+summary(fit)
+```
+
+## 5. Model Selection 
+
+```{r}
+# Stepwise Backward Regression
+step(fit)
+
+fitbackward <- lm(mpg ~ am + wt + qsec, data=mcars)
+summary(fitbackward)
+
+# Check for interaction effect:
+fitint <- update(fitbackward, mpg ~ am + wt + qsec + am*wt)
+anova(fitbackward, fitint)
+summary(fitint)
+```
+
+## 6. Regression Dignostics
+
+```{r}
+par(mfrow=c(2,2))
+plot(fitint)
+```
+
